@@ -17,6 +17,7 @@ const TripCard = ({
   price,
 }: TripCardProps) => {
   const path = useLocation();
+
   return (
     <Link
       to={
@@ -24,7 +25,7 @@ const TripCard = ({
           ? `/travel/${id}`
           : `/trips/${id}`
       }
-      className="trip-card"
+      className="trip-card hover:scale-110 transition-all duration-300 ease-in-out"
     >
       <img src={imageUrl} alt={name} />
       <article>

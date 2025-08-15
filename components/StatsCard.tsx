@@ -13,7 +13,7 @@ const StatsCard = ({
   );
   const isDecrement = trend === "decrement";
   return (
-    <article className="stats-card">
+    <article className="stats-card hover:scale-110 transition-all duration-300 ease-in-out">
       <h3 className="text-base font-medium">{headerTitle}</h3>
       <div className="content">
         <div className="flex flex-col gap-4">
