@@ -1,12 +1,16 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
+import { logoutUser } from "~/appwrite/auth";
 import { sidebarItems } from "~/constants";
 import { cn } from "~/lib/utils";
 const NavItems = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
-  const user = {
-    name: "Tayyab",
-    email: "m.tayyab.92.work@gmail.com",
-    imageUrl: "/assets/images/david.webp",
+  const user = useLoaderData();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logoutUser();
+    navigate("/sign-in");
   };
+
   return (
     <section className="nav-items">
       <Link to="/" className="link-logo">
@@ -46,10 +50,7 @@ const NavItems = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
             <h2>{user?.name || "Tayyab"}</h2>
             <p>{user?.email || "m.tayyab.92.work@gmail.com"}</p>
           </article>
-          <button
-            onClick={() => console.log("User logged out")}
-            className="cursor-pointer"
-          >
+          <button onClick={handleLogout} className="cursor-pointer">
             <img
               src="/assets/icons/logout.svg"
               alt="Logout"

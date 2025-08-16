@@ -114,7 +114,7 @@
   }
 
   .auth {
-    @apply w-full h-screen flex bg-auth bg-cover bg-no-repeat;
+    @apply w-full h-screen flex bg-auth bg-cover bg-center bg-no-repeat;
   }
 
   .payment-success {
