@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { Header } from "../../../components";
 import { ComboBoxComponent } from "@syncfusion/ej2-react-dropdowns";
 import type { Route } from "./+types/CreateTrip";
@@ -29,6 +30,7 @@ export const loader = async () => {
 };
 
 const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
+  const navigate = useNavigate();
   const countries = loaderData as Country[] | null;
 
   const [formData, setFormData] = useState<TripFormData>({
@@ -83,8 +85,28 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
       return;
     }
     try {
-      console.log("User", user);
-      console.log("FormData", formData);
+      const response = await fetch("/api/create-trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          country: formData.country,
+          travelStyle: formData.travelStyle,
+          interests: formData.interest,
+          budget: formData.budget,
+          numberOfDays: formData.duration,
+          groupType: formData.groupType,
+          userId: user.$id,
+        }),
+      });
+      const result: CreateTripResponse = await response.json();
+
+      if (result?.id) {
+        navigate(`/trips/${result.id}`);
+      } else {
+        console.error("Error generating a trip:", result?.message);
+      }
     } catch (error) {
       console.error("Error generating trip:", error);
     } finally {
