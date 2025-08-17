@@ -10,6 +10,8 @@ export async function clientLoader() {
     const user = await account.get();
     if (!user.$id) return redirect("/sign-in");
     const existingUser = await getExistingUser(user.$id);
+    console.log("User:", user);
+    console.log("Existing User:", existingUser);
 
     if (existingUser?.status === "user") {
       return redirect("/sign-in");
